@@ -7,6 +7,8 @@ package gestao_livros.Interface;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import gestao_livros.ValidEmail;
+import gestao_livros.MyConnection;
 
 /**
  *
@@ -344,12 +346,34 @@ public class Reg_Wind extends javax.swing.JFrame {
         String em = email.getText();
         String pss = new String(pass.getPassword());
         String cpss = new String(pass_conf.getPassword());
+        ValidEmail val = new ValidEmail();
+        MyConnection connect = new MyConnection();
         
         if(!(usr.isEmpty() && em.isEmpty() && pss.isEmpty() && cpss.isEmpty()))
         {
             if((pss.equals(cpss)))
             {
-                JOptionPane.showMessageDialog(this, "Good ");
+                
+                    if(val.validate(em) == true)
+                    {
+                        if(connect.checkUsername(em) == true)
+                        {
+                            
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(this, "Usuario ja existe, tente novamente");
+                            this.dispose();
+                            this.setVisible(true);
+                        }
+                    }
+                    
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Formato do email Incorreto");
+                        this.dispose();
+                        this.setVisible(true);
+                    }
                 
             }
             else
