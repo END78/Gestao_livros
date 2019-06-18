@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import gestao_livros.ValidEmail;
 import gestao_livros.MyConnection;
+import java.sql.*;
 
 /**
  *
@@ -192,7 +193,7 @@ public class Reg_Wind extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(34, 167, 240));
         jButton2.setFont(new java.awt.Font("Bitstream Vera Sans", 1, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Login");
+        jButton2.setText("Register");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -247,9 +248,9 @@ public class Reg_Wind extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(email)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(email, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                     .addComponent(User)
                     .addComponent(pass)
                     .addComponent(pass_conf))
@@ -356,9 +357,43 @@ public class Reg_Wind extends javax.swing.JFrame {
                 
                     if(val.validate(em) == true)
                     {
-                        if(connect.checkUsername(em) == true)
+                        if(connect.checkUsername(em) == false)
                         {
+                             PreparedStatement ps;
+                             String query = "INSERT INTO `REQUERENTE`(`ID_R`, `NOME`, `EMAIL`, `PASS`) VALUES (?,?,?,?)";
                             
+                                try
+                                   {
+                                   
+                                    String myDriver = "com.mysql.jdbc.Driver";
+                                    String myUrl = "jdbc:mysql://localhost:3306/BIBLIOTECA?verifyServerCertificate=false&useSSL=true";
+                                    Class.forName(myDriver);
+                                    Connection conn = DriverManager.getConnection(myUrl, "root", "casadejogos");
+      
+                                    ps = conn.prepareStatement(query);
+
+   
+                                    ps.setString(1, null);
+                                    ps.setString(2, usr);
+                                    ps.setString(3, em);
+                                    ps.setString(4, pss);
+                                     if(ps.executeUpdate() > 0)
+                                         {
+                                            JOptionPane.showMessageDialog(null, "Novo Utilizador Adicionado");
+                                            Home obj = new Home();
+                                           
+                                            obj.setVisible(true);
+                                            obj.pack();
+                                            obj.setLocationRelativeTo(null);
+                                            obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                            this.dispose();
+                                         }
+                                   }
+                                  catch (Exception e)
+                                    {
+                                        JOptionPane.showMessageDialog(this,"Detectada excepcao " + e.getMessage());
+                                        
+                                    }
                         }
                         else
                         {
