@@ -7,9 +7,12 @@ package gestao_livros.Interface;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import gestao_livros.ValidEmail;
+import gestao_livros.*;
 import gestao_livros.MyConnection;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import sun.security.provider.MD5;
 
 /**
  *
@@ -343,21 +346,39 @@ public class Reg_Wind extends javax.swing.JFrame {
     }//GEN-LAST:event_pass_confActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        String usr = User.getText();
+        
+        Requerente usr = new Requerente();
+        /*String usr = User.getText();
         String em = email.getText();
         String pss = new String(pass.getPassword());
-        String cpss = new String(pass_conf.getPassword());
+        String cpss = new String(pass_conf.getPassword());*/
+        usr.setEmail(email.getText());
+        usr.setNome(User.getText());
+        usr.setPass(pass.getPassword());
+        char cpss []  = pass_conf.getPassword();
+        String pss  = new String(usr.getPass());
+        String pssf  = String.valueOf(cpss);
+        
+        //criptografar pass
+         
+        String conf = new String(cpss);
         ValidEmail val = new ValidEmail();
         MyConnection connect = new MyConnection();
         
-        if(!(usr.isEmpty() && em.isEmpty() && pss.isEmpty() && cpss.isEmpty()))
+         
+        String generatedPassword = null;
+        EncryptPass novo = new EncryptPass();
+        generatedPassword = novo.encrypt(pss);
+        
+        
+        if(!(usr.getNome().isEmpty() && usr.getEmail().isEmpty() && usr.getPass().length>=1 && cpss.length>=1))
         {
-            if((pss.equals(cpss)))
+            if((pss.equals(conf)))
             {
                 
-                    if(val.validate(em) == true)
+                    if(val.validate(usr.getEmail()) == true)
                     {
-                        if(connect.checkUsername(em) == false)
+                        if(connect.checkUsername(usr.getEmail()) == false)
                         {
                              PreparedStatement ps;
                              String query = "INSERT INTO `REQUERENTE`(`ID_R`, `NOME`, `EMAIL`, `PASS`) VALUES (?,?,?,?)";
@@ -374,9 +395,10 @@ public class Reg_Wind extends javax.swing.JFrame {
 
    
                                     ps.setString(1, null);
-                                    ps.setString(2, usr);
-                                    ps.setString(3, em);
-                                    ps.setString(4, pss);
+                                    ps.setString(2, usr.getNome());
+                                    ps.setString(3, usr.getEmail());
+                                    ps.setString(4, generatedPassword);
+                                   
                                      if(ps.executeUpdate() > 0)
                                          {
                                             JOptionPane.showMessageDialog(null, "Novo Utilizador Adicionado");
