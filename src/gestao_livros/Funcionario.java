@@ -9,6 +9,35 @@ package gestao_livros;
  *
  * @author danielpires
  */
-public class Funcionario {
+public class Funcionario 
+{
+    
+    private String Nome;
+    private String email;
+    private char pass[];
+
+    public String getNome() {
+        return Nome;
+    }
+
+    public void setNome(String Nome) {
+        this.Nome = Nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public char[] getPass() {
+        return pass;
+    }
+
+    public void setPass(char[] pass) {
+        this.pass = pass;
+    }
     
 }
