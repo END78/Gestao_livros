@@ -9,7 +9,7 @@ import gestao_livros.Interface.Reg_Wind;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import gestao_livros.EncryptPass;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -255,6 +255,10 @@ public class Home extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String user=User.getText();
         String pwd= new String (Pass.getPassword());
+        Post_Login window = new Post_Login();
+        EncryptPass enc = new EncryptPass ();
+        Boolean check;
+        
         if((user.isEmpty() && pwd.isEmpty() ))
         {
             JOptionPane.showMessageDialog(this,"Os campos nao podem estar vazios");
@@ -290,14 +294,27 @@ public class Home extends javax.swing.JFrame {
                 String uname=rs.getString("NOME");
                 
                 String password=rs.getString("PASS");
-                
+                check = enc.checkPass(pwd, password);
                
                 
                 
                 
-            if ((user.equals(uname)) && (pwd.equals(password)))
-                    JOptionPane.showMessageDialog(this,"Existem");
-                
+            if ((user.equals(uname)) && check == true)
+            {       
+                    window.setVisible(true);
+                    window.pack();
+                    window.setLocationRelativeTo(null);
+                    window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    this.dispose();
+                          
+            } 
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Palavra passe/Utilizador Errado");
+                this.dispose();
+                this.setVisible(true);
+                this.setLocationRelativeTo(null);
+            }
             }
             }
         catch (Exception e){

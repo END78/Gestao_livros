@@ -348,16 +348,13 @@ public class Reg_Wind extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         
         Requerente usr = new Requerente();
-        /*String usr = User.getText();
-        String em = email.getText();
-        String pss = new String(pass.getPassword());
-        String cpss = new String(pass_conf.getPassword());*/
+     
         usr.setEmail(email.getText());
         usr.setNome(User.getText());
         usr.setPass(pass.getPassword());
         char cpss []  = pass_conf.getPassword();
         String pss  = new String(usr.getPass());
-        String pssf  = String.valueOf(cpss);
+        
         
         //criptografar pass
          
@@ -368,7 +365,7 @@ public class Reg_Wind extends javax.swing.JFrame {
          
         String generatedPassword = null;
         EncryptPass novo = new EncryptPass();
-        generatedPassword = novo.encrypt(pss);
+        generatedPassword = novo.hashPassword(pss);
         
         
         if(!(usr.getNome().isEmpty() && usr.getEmail().isEmpty() && usr.getPass().length>=1 && cpss.length>=1))

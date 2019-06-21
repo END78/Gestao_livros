@@ -7,6 +7,7 @@ package gestao_livros;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class EncryptPass 
 {
-    public String encrypt(String password)
+    /*public String encrypt(String password)
     {   
         String en_pass = null;
         
@@ -40,5 +41,18 @@ public class EncryptPass
             }
     
         return en_pass;
+    }*/
+    public String hashPassword(String plainTextPassword)
+    {
+        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
+    }
+    
+    
+    public boolean checkPass(String plainPassword, String hashedPassword) 
+    {
+        if (BCrypt.checkpw(plainPassword, hashedPassword))
+                return true;
+        else
+                return false;
     }
 }
