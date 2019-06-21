@@ -14,6 +14,15 @@ public class Livros
     private String ISBN;
     private String autor;
     private String ano_publ;
+    private String nome;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
     public String getISBN() {
         return ISBN;
