@@ -39,8 +39,11 @@ public class Post_Login extends javax.swing.JFrame {
         add_book = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenu2 = new javax.swing.JMenu();
+        rmbook = new javax.swing.JMenuItem();
+        rm_cl = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        emp = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,14 +79,20 @@ public class Post_Login extends javax.swing.JFrame {
         jMenuBar1.setForeground(new java.awt.Color(248, 148, 6));
         jMenuBar1.setPreferredSize(new java.awt.Dimension(84, 50));
 
+        jMenu1.setBorder(null);
         jMenu1.setForeground(java.awt.Color.white);
         jMenu1.setText("Adicionar");
+        jMenu1.setContentAreaFilled(false);
         jMenu1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jMenu1.setMargin(new java.awt.Insets(0, 0, 0, 2));
 
-        add_book.setBackground(new java.awt.Color(248, 148, 6));
+        add_book.setBackground(new java.awt.Color(87, 79, 74));
         add_book.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        add_book.setForeground(new java.awt.Color(248, 148, 6));
         add_book.setText("Adicionar Livro");
         add_book.setBorder(null);
+        add_book.setContentAreaFilled(false);
+        add_book.setIconTextGap(0);
         add_book.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 add_bookMouseClicked(evt);
@@ -99,18 +108,62 @@ public class Post_Login extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setBorder(null);
         jMenu2.setForeground(java.awt.Color.white);
         jMenu2.setText("Remover");
         jMenu2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jMenu2.setMargin(new java.awt.Insets(0, 0, 0, 2));
+
+        rmbook.setBackground(new java.awt.Color(87, 79, 74));
+        rmbook.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        rmbook.setForeground(new java.awt.Color(248, 148, 6));
+        rmbook.setText("Remover Livro");
+        rmbook.setBorder(null);
+        rmbook.setIconTextGap(0);
+        rmbook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rmbookActionPerformed(evt);
+            }
+        });
+        jMenu2.add(rmbook);
+
+        rm_cl.setBackground(new java.awt.Color(87, 79, 74));
+        rm_cl.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        rm_cl.setForeground(new java.awt.Color(248, 148, 6));
+        rm_cl.setText("Remover Cliente");
+        rm_cl.setBorder(null);
+        rm_cl.setIconTextGap(0);
+        rm_cl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rm_clActionPerformed(evt);
+            }
+        });
+        jMenu2.add(rm_cl);
+
         jMenuBar1.add(jMenu2);
 
+        jMenu4.setBorder(null);
         jMenu4.setForeground(java.awt.Color.white);
         jMenu4.setText("Realizar");
         jMenu4.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jMenu4.setMargin(new java.awt.Insets(0, 0, 0, 2));
         jMenu4.add(jSeparator2);
+
+        emp.setBackground(new java.awt.Color(87, 79, 74));
+        emp.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        emp.setForeground(new java.awt.Color(248, 148, 6));
+        emp.setText("Emprestimo");
+        emp.setIconTextGap(0);
+        emp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                empActionPerformed(evt);
+            }
+        });
+        jMenu4.add(emp);
 
         jMenuBar1.add(jMenu4);
 
+        jMenu3.setBorder(null);
         jMenu3.setForeground(java.awt.Color.white);
         jMenu3.setText("Exit");
         jMenu3.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -145,7 +198,7 @@ public class Post_Login extends javax.swing.JFrame {
 
     private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
         this.dispose();
-       
+        System.exit(1);
        
     }//GEN-LAST:event_jMenu3MouseClicked
 
@@ -158,6 +211,27 @@ public class Post_Login extends javax.swing.JFrame {
        
        
     }//GEN-LAST:event_add_bookActionPerformed
+
+    private void rmbookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rmbookActionPerformed
+       new Rm_Livros().setVisible(true);
+       new Rm_Livros().pack();
+       new Rm_Livros().setLocationRelativeTo(null);
+       new Rm_Livros().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_rmbookActionPerformed
+
+    private void empActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empActionPerformed
+       new Loan_Book().setVisible(true);
+       new Loan_Book().pack();
+       new Loan_Book().setLocationRelativeTo(null);
+       new Loan_Book().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_empActionPerformed
+
+    private void rm_clActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rm_clActionPerformed
+       new Rm_Cliente().setVisible(true);
+       new Rm_Cliente().pack();
+       new Rm_Cliente().setLocationRelativeTo(null);
+       new Rm_Cliente().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_rm_clActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,6 +270,7 @@ public class Post_Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem add_book;
+    private javax.swing.JMenuItem emp;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -205,5 +280,7 @@ public class Post_Login extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPanel painel;
+    private javax.swing.JMenuItem rm_cl;
+    private javax.swing.JMenuItem rmbook;
     // End of variables declaration//GEN-END:variables
 }

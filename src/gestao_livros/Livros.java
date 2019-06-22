@@ -15,6 +15,15 @@ public class Livros
     private String autor;
     private String ano_publ;
     private String nome;
+    private boolean is_loaned = false ;
+
+    public boolean isIs_loaned() {
+        return is_loaned;
+    }
+
+    public void setIs_loaned(boolean is_loaned) {
+        this.is_loaned = is_loaned;
+    }
 
     public String getNome() {
         return nome;

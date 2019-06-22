@@ -5,7 +5,7 @@
  */
 package gestao_livros.Interface;
 
-import gestao_livros.Interface.Reg_Wind;
+
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -114,7 +114,7 @@ public class Home extends javax.swing.JFrame {
         jLabel5.setText("Password:");
 
         User.setBackground(new java.awt.Color(108, 122, 137));
-        User.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        User.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         User.setForeground(new java.awt.Color(228, 241, 254));
 
         jButton1.setBackground(new java.awt.Color(192, 57, 43));
@@ -161,7 +161,8 @@ public class Home extends javax.swing.JFrame {
         });
 
         Pass.setBackground(new java.awt.Color(108, 122, 137));
-        Pass.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        Pass.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        Pass.setForeground(new java.awt.Color(228, 241, 254));
 
         func.setBackground(new java.awt.Color(44, 62, 80));
         func.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -300,12 +301,22 @@ public class Home extends javax.swing.JFrame {
                 
                 
             if ((user.equals(uname)) && check == true)
-            {       
+            {     
+                if(func.isSelected())
+                {
                     window.setVisible(true);
                     window.pack();
                     window.setLocationRelativeTo(null);
                     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     this.dispose();
+                }
+                else if(cl.isSelected())
+                {
+                    new Cl_post().setVisible(true);
+                    new Cl_post().pack();
+                    new Cl_post().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    this.dispose();
+                }
                           
             } 
             else

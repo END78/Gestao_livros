@@ -9,10 +9,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import gestao_livros.*;
 import gestao_livros.MyConnection;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import sun.security.provider.MD5;
+
+
+
 
 /**
  *
@@ -170,8 +170,8 @@ public class Reg_Wind extends javax.swing.JFrame {
         jLabel5.setText("Password:");
 
         User.setBackground(new java.awt.Color(108, 122, 137));
-        User.setFont(new java.awt.Font("Bitstream Vera Sans", 0, 14)); // NOI18N
-        User.setForeground(java.awt.Color.white);
+        User.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        User.setForeground(new java.awt.Color(228, 241, 254));
         User.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UserActionPerformed(evt);
@@ -217,14 +217,16 @@ public class Reg_Wind extends javax.swing.JFrame {
         jLabel7.setText("ConfirmarPassword:");
 
         email.setBackground(new java.awt.Color(108, 122, 137));
-        email.setFont(new java.awt.Font("Bitstream Vera Sans", 0, 14)); // NOI18N
-        email.setForeground(java.awt.Color.white);
+        email.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        email.setForeground(new java.awt.Color(228, 241, 254));
 
         pass.setBackground(new java.awt.Color(108, 122, 137));
-        pass.setForeground(java.awt.Color.white);
+        pass.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        pass.setForeground(new java.awt.Color(228, 241, 254));
 
         pass_conf.setBackground(new java.awt.Color(108, 122, 137));
-        pass_conf.setForeground(java.awt.Color.white);
+        pass_conf.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        pass_conf.setForeground(new java.awt.Color(228, 241, 254));
         pass_conf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pass_confActionPerformed(evt);
