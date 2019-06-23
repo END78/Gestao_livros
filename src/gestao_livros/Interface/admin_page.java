@@ -190,7 +190,12 @@ public class admin_page extends javax.swing.JFrame {
     }//GEN-LAST:event_rm_funcMouseClicked
 
     private void rm_funcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rm_funcActionPerformed
-        // TODO add your handling code here:
+         Rem_Func n = new Rem_Func();
+         n.setVisible(true);
+         n.pack();
+         n.setLocationRelativeTo(null);
+         n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         this.dispose();
     }//GEN-LAST:event_rm_funcActionPerformed
 
     /**

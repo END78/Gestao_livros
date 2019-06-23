@@ -15,6 +15,8 @@ public class Funcionario
     private String Nome;
     private String email;
     private char pass[];
+    
+    
 
     public String getNome() {
         return Nome;
