@@ -112,7 +112,7 @@ public class Reg_Func extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Bitstream Vera Sans Mono", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Login");
+        jLabel2.setText("Registar Funcionario");
 
         minim1.setFont(new java.awt.Font("Bitstream Vera Sans", 1, 36)); // NOI18N
         minim1.setForeground(new java.awt.Color(255, 255, 255));
@@ -139,9 +139,9 @@ public class Reg_Func extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(minim1)
                 .addGap(18, 18, 18)
                 .addComponent(exit1)
@@ -256,7 +256,7 @@ public class Reg_Func extends javax.swing.JFrame {
                     .addComponent(User)
                     .addComponent(pass)
                     .addComponent(pass_conf))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,7 +388,7 @@ public class Reg_Func extends javax.swing.JFrame {
 
                             if(ps.executeUpdate() > 0)
                             {
-                                JOptionPane.showMessageDialog(null, "Novo Utilizador Adicionado");
+                                JOptionPane.showMessageDialog(null, "Novo Funcionario Adicionado");
                                 admin_page obj = new admin_page();
 
                                 obj.setVisible(true);

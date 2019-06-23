@@ -63,7 +63,7 @@ public class Reg_Wind extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Bitstream Vera Sans Mono", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Register");
+        jLabel1.setText("Register Cliente");
 
         minim.setFont(new java.awt.Font("Bitstream Vera Sans", 1, 36)); // NOI18N
         minim.setForeground(new java.awt.Color(255, 255, 255));

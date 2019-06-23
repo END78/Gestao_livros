@@ -39,6 +39,7 @@ public class admin_page extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenu2 = new javax.swing.JMenu();
         rm_func = new javax.swing.JMenuItem();
+        log_out = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -139,6 +140,21 @@ public class admin_page extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        log_out.setForeground(java.awt.Color.white);
+        log_out.setText("LogOut");
+        log_out.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        log_out.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                log_outMouseClicked(evt);
+            }
+        });
+        log_out.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                log_outActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(log_out);
+
         jMenu3.setForeground(java.awt.Color.white);
         jMenu3.setText("Exit");
         jMenu3.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -198,6 +214,24 @@ public class admin_page extends javax.swing.JFrame {
          this.dispose();
     }//GEN-LAST:event_rm_funcActionPerformed
 
+    private void log_outMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_log_outMouseClicked
+        this.dispose();
+        Home n = new Home();
+        n.setVisible(true);
+        n.pack();
+        n.setLocationRelativeTo(null);
+        n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_log_outMouseClicked
+
+    private void log_outActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_log_outActionPerformed
+        this.dispose();
+        Home n = new Home();
+        n.setVisible(true);
+        n.pack();
+        n.setLocationRelativeTo(null);
+        n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_log_outActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -242,6 +276,7 @@ public class admin_page extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenu log_out;
     private javax.swing.JPanel painel;
     private javax.swing.JMenuItem rm_func;
     // End of variables declaration//GEN-END:variables
