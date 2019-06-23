@@ -5,6 +5,16 @@
  */
 package gestao_livros.Interface;
 
+import gestao_livros.Funcionario;
+import gestao_livros.Livros;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author danielpires
@@ -17,7 +27,124 @@ public class Cl_post extends javax.swing.JFrame {
     public Cl_post() {
         initComponents();
         this.setLocationRelativeTo(null);
+        Show_Users_In_JTable();
     }
+    
+    public Connection getConnection()
+   {
+       Connection con = null;
+       try {
+           Class.forName("com.mysql.jdbc.Driver");
+           con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIBLIOTECA?verifyServerCertificate=false&useSSL=true","root","casadejogos");
+           return con;
+       } catch (Exception e) {
+           e.printStackTrace();
+           return null;
+       }
+   }
+   public ArrayList<Livros> getUsersList()
+   {
+       ArrayList<Livros> usersList = new ArrayList<Livros>();
+       Connection connection = getConnection();
+       
+       String query = "SELECT * FROM  LIVRO ";
+       Statement st;
+       ResultSet rs;
+       
+       try {
+           st = connection.createStatement();
+           rs = st.executeQuery(query);
+           
+           while(rs.next())
+           {
+               Livros user = new Livros();
+               
+               user.setNome (rs.getString("NOME"));
+               user.setISBN (rs.getString("ISBN"));
+               user.setAutor(rs.getString("AUTOR"));
+               user.setIs_loaned(rs.getBoolean("IS_LOANED"));
+               user.setAno_publ(rs.getString("ANO_PUBL"));
+             
+               usersList.add(user);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return usersList;
+   }
+   public ArrayList<Livros> getUsersList2()
+   {
+       ArrayList<Livros> usersList = new ArrayList<Livros>();
+       Connection connection = getConnection();
+       
+       String query = "SELECT * FROM `LIVRO` WHERE NOME = '"+search.getText()+"'";
+       Statement st;
+       ResultSet rs;
+       
+       try {
+           st = connection.createStatement();
+           rs = st.executeQuery(query);
+           
+           while(rs.next())
+           {
+               Livros user = new Livros();
+               
+               user.setNome (rs.getString("NOME"));
+               user.setISBN (rs.getString("ISBN"));
+               user.setAutor(rs.getString("AUTOR"));
+               user.setIs_loaned(rs.getBoolean("IS_LOANED"));
+               user.setAno_publ(rs.getString("ANO_PUBL"));
+             
+               usersList.add(user);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return usersList;
+   }
+   public void Show_Users_In_JTable()
+   {
+       ArrayList<Livros> list = getUsersList();
+       DefaultTableModel model = (DefaultTableModel)table.getModel();
+       Object[] row = new Object[5];
+       for(int i = 0; i < list.size(); i++)
+       {
+           row[0] = list.get(i).getNome();
+           row[1] = list.get(i).getAutor();
+           row[2] = list.get(i).getISBN();
+           row[3] = list.get(i).isIs_loaned();
+           row[4] = list.get(i).getAno_publ();
+           
+           model.addRow(row);
+       }
+    }
+   public void Show_Users_In_JTable2()
+   {
+       ArrayList<Livros> list = getUsersList2();
+       DefaultTableModel model = (DefaultTableModel)table.getModel();
+       Object[] row = new Object[5];
+       for(int i = 0; i < list.size(); i++)
+       {
+           row[0] = list.get(i).getNome();
+           row[1] = list.get(i).getAutor();
+           row[2] = list.get(i).getISBN();
+           row[3] = list.get(i).isIs_loaned();
+           row[4] = list.get(i).getAno_publ();
+           
+           model.addRow(row);
+       }
+    }
+   public void executeSQlQuery(String query, String message)
+   {
+       Connection con = getConnection();
+       Statement st;
+       try{
+           st = con.createStatement();
+           
+       }catch(Exception ex){
+           ex.printStackTrace();
+       }
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,13 +159,14 @@ public class Cl_post extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        nome_book2 = new javax.swing.JTextField();
+        search = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         exit = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(44, 62, 80));
         jPanel1.setPreferredSize(new java.awt.Dimension(1195, 622));
@@ -67,9 +195,9 @@ public class Cl_post extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(248, 148, 6));
         jLabel9.setText("Cliente");
 
-        nome_book2.setBackground(new java.awt.Color(108, 122, 137));
-        nome_book2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        nome_book2.setBorder(null);
+        search.setBackground(new java.awt.Color(108, 122, 137));
+        search.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        search.setBorder(null);
 
         jButton6.setBackground(new java.awt.Color(192, 57, 43));
         jButton6.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -112,8 +240,18 @@ public class Cl_post extends javax.swing.JFrame {
             new String [] {
                 "Nome do Livro", "Autor", "ISBN", "Disponivel", "Ano Publicacao"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table.setColumnSelectionAllowed(true);
         jScrollPane2.setViewportView(table);
+        table.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -131,7 +269,7 @@ public class Cl_post extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(nome_book2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -150,7 +288,7 @@ public class Cl_post extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nome_book2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel9)))
@@ -182,7 +320,10 @@ public class Cl_post extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-
+        DefaultTableModel model = (DefaultTableModel)table.getModel();
+        model.setRowCount(0);
+         
+        Show_Users_In_JTable2();
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -249,7 +390,7 @@ public class Cl_post extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField nome_book2;
+    private javax.swing.JTextField search;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
