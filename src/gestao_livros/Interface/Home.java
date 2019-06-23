@@ -254,6 +254,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
         String user=User.getText();
         String pwd= new String (Pass.getPassword());
         Post_Login window = new Post_Login();
@@ -279,58 +280,82 @@ public class Home extends javax.swing.JFrame {
             sql = "SELECT * FROM REQUERENTE";
         }
         ResultSet rs = null;
+        ResultSet rs1 = null;
        
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con= (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/BIBLIOTECA?verifyServerCertificate=false&useSSL=true","root","casadejogos");
-
+            // statement login usuario normal ou funcionario
             Statement stmt=con.createStatement();
             rs = stmt.executeQuery(sql);
             
-            
-            
+            //statement para administrador de sistema
+            Statement stmt2 = con.createStatement();
+            String chek = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = TRUE";
+            rs1 = stmt2.executeQuery(chek);
           
         
-            while(rs.next()) {
+            while(rs.next()) 
+            {
                 String uname=rs.getString("NOME");
                 
                 String password=rs.getString("PASS");
                 check = enc.checkPass(pwd, password);
                
+                    while(rs1.next())
+                    {
+                       String un = rs1.getString("NOME");
+                       String pss = rs1.getString("PASS");
+                       Boolean ck = enc.checkPass(pwd,pss);
+            
+                        if ((user.equals(uname)) && check == true)
+                          {     
+                            if(func.isSelected())
+                                {
+                                    if(user.equals(un)&&ck == true)
+                                         {
+                                            admin_page n = new admin_page();
+                                            n.setVisible(true);
+                                            n.pack();
+                                            n.setLocationRelativeTo(null);
+                                            n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                            this.dispose();
+                                         }
+                                    else
+                                         {
+                                            window.setVisible(true);
+                                            window.pack();
+                                            window.setLocationRelativeTo(null);
+                                            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                            this.dispose();
+                                         }
+                   
+                                }
+                            else if(cl.isSelected())
+                                {
+                                     new Cl_post().setVisible(true);
+                                     new Cl_post().pack();
+                                     new Cl_post().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                     this.dispose();
+                                 }
+                           
+                            } 
+                            else
+                            {
+                                JOptionPane.showMessageDialog(this, "Palavra passe/Utilizador Errado");
+                                this.dispose();
+                                this.setVisible(true);
+                                this.setLocationRelativeTo(null);
+                            }
+                    }
                 
-                
-                
-            if ((user.equals(uname)) && check == true)
-            {     
-                if(func.isSelected())
-                {
-                    window.setVisible(true);
-                    window.pack();
-                    window.setLocationRelativeTo(null);
-                    window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    this.dispose();
-                }
-                else if(cl.isSelected())
-                {
-                    new Cl_post().setVisible(true);
-                    new Cl_post().pack();
-                    new Cl_post().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    this.dispose();
-                }
-                          
-            } 
-            else
-            {
-                JOptionPane.showMessageDialog(this, "Palavra passe/Utilizador Errado");
-                this.dispose();
-                this.setVisible(true);
-                this.setLocationRelativeTo(null);
+            
             }
             }
-            }
-        catch (Exception e){
+        catch (Exception e)
+        {
             JOptionPane.showMessageDialog(this, e.getMessage());
-            }
+        }
         
         }
     
