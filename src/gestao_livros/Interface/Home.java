@@ -48,6 +48,7 @@ public class Home extends javax.swing.JFrame {
         Pass = new javax.swing.JPasswordField();
         func = new javax.swing.JCheckBox();
         cl = new javax.swing.JCheckBox();
+        admin = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -158,30 +159,40 @@ public class Home extends javax.swing.JFrame {
         cl.setForeground(java.awt.Color.white);
         cl.setText("Cliente");
 
+        admin.setBackground(new java.awt.Color(44, 62, 80));
+        admin.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        admin.setForeground(java.awt.Color.white);
+        admin.setText("Administrador");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(admin)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(func)
+                        .addGap(18, 18, 18)
+                        .addComponent(cl))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(func)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
-                                .addComponent(cl))
-                            .addComponent(User, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Pass)
+                                .addGap(108, 108, 108)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(96, 96, 96)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Pass, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -191,16 +202,17 @@ public class Home extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cl)
-                    .addComponent(func))
-                .addGap(24, 24, 24)
+                    .addComponent(func)
+                    .addComponent(admin))
+                .addGap(49, 49, 49)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                    .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(Pass, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                    .addComponent(Pass, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -238,98 +250,106 @@ public class Home extends javax.swing.JFrame {
         
         String user=User.getText();
         String pwd= new String (Pass.getPassword());
-        Post_Login window = new Post_Login();
+        
         EncryptPass enc = new EncryptPass ();
-        Boolean check;
+        Boolean check = null;
         
         if((user.isEmpty() && pwd.isEmpty() ))
-        {
-            JOptionPane.showMessageDialog(this,"Os campos nao podem estar vazios");
-            this.dispose();
-            this.setVisible(true);
+            {
+                JOptionPane.showMessageDialog(this,"Os campos nao podem estar vazios");
+                this.dispose();
+                this.setVisible(true);
             
-        }
+            }
          else
-        {
+            {
             String sql=null;
-        if(func.isSelected())
-        {
-            sql = "SELECT * FROM FUNCIONARIO";
-        }
-        else if(cl.isSelected())
-        {
-            sql = "SELECT * FROM REQUERENTE";
-        }
+        
+            if(func.isSelected())
+                {
+                    sql = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = FALSE";
+                }
+            else if(cl.isSelected())
+                {
+                    sql = "SELECT * FROM REQUERENTE ";
+                }
+            else if(admin.isSelected())
+                {
+                     sql = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = TRUE";
+                 }
+        
         ResultSet rs = null;
-        ResultSet rs1 = null;
+       
        
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con= (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/BIBLIOTECA?verifyServerCertificate=false&useSSL=true","root","casadejogos");
+            
             // statement login usuario normal ou funcionario
             Statement stmt=con.createStatement();
             rs = stmt.executeQuery(sql);
             
-            //statement para administrador de sistema
-            Statement stmt2 = con.createStatement();
-            String chek = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = TRUE";
-            rs1 = stmt2.executeQuery(chek);
-          
+            
+            
+            
         
             while(rs.next()) 
             {
                 String uname=rs.getString("NOME");
-                
                 String password=rs.getString("PASS");
                 check = enc.checkPass(pwd, password);
-               
-                    while(rs1.next())
-                    {
-                       String un = rs1.getString("NOME");
-                       String pss = rs1.getString("PASS");
-                       Boolean ck = enc.checkPass(pwd,pss);
-            
-                        if ((user.equals(uname)) && check == true)
-                          {     
-                            if(func.isSelected())
-                                {
-                                    if(user.equals(un)&&ck == true)
-                                         {
-                                            admin_page n = new admin_page();
-                                            n.setVisible(true);
-                                            n.pack();
-                                            n.setLocationRelativeTo(null);
-                                            n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                                            this.dispose();
-                                         }
-                                    else
-                                         {
-                                            window.setVisible(true);
-                                            window.pack();
-                                            window.setLocationRelativeTo(null);
-                                            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                                            this.dispose();
-                                         }
-                   
-                                }
-                            else if(cl.isSelected())
-                                {
-                                     new Cl_post().setVisible(true);
-                                     new Cl_post().pack();
-                                     new Cl_post().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                                     this.dispose();
-                                 }
-                           
-                            } 
-                            else
-                            {
-                                JOptionPane.showMessageDialog(this, "Palavra passe/Utilizador Errado");
-                                this.dispose();
-                                this.setVisible(true);
-                                this.setLocationRelativeTo(null);
-                            }
-                    }
                 
+               
+                  
+            
+                             
+                 
+                  if(user.equals(uname)&& check == true && admin.isSelected())
+                    {
+                      admin_page n = new admin_page();
+                      n.setVisible(true);
+                      n.pack();
+                      n.setLocationRelativeTo(null);
+                      n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                      this.dispose();  
+                      break;
+                      
+                    }
+                    
+                  if( func.isSelected() && user.equals(uname) && check==true )
+                    {
+                      
+                      Post_Login window = new Post_Login();
+                      window.setVisible(true);
+                      window.pack();
+                      window.setLocationRelativeTo(null);
+                      window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                      this.dispose();
+                      break;
+                      
+                    }
+                   
+                                
+                    if(user.equals(uname) && check == true && cl.isSelected())
+                    {
+                      
+                       new Cl_post().setVisible(true);
+                       new Cl_post().pack();
+                       new Cl_post().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                       this.dispose();
+                       break;
+                    }
+                           
+                            
+                    if(user.equals(uname) || !(user.equals(uname)) && check == false)
+                    {
+                        JOptionPane.showMessageDialog(this, "Palavra passe/Utilizador Errado");
+                        this.dispose();
+                        this.setVisible(true);
+                        this.setLocationRelativeTo(null);
+                    }
+                    
+                 
             
             }
             }
@@ -389,6 +409,7 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField Pass;
     private javax.swing.JTextField User;
+    private javax.swing.JCheckBox admin;
     private javax.swing.JCheckBox cl;
     private javax.swing.JLabel exit;
     private javax.swing.JCheckBox func;

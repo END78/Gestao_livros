@@ -79,7 +79,6 @@ public class Post_Login extends javax.swing.JFrame {
         jMenuBar1.setForeground(new java.awt.Color(248, 148, 6));
         jMenuBar1.setPreferredSize(new java.awt.Dimension(84, 50));
 
-        jMenu1.setBorder(null);
         jMenu1.setForeground(java.awt.Color.white);
         jMenu1.setText("Adicionar");
         jMenu1.setContentAreaFilled(false);
@@ -108,7 +107,6 @@ public class Post_Login extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setBorder(null);
         jMenu2.setForeground(java.awt.Color.white);
         jMenu2.setText("Remover");
         jMenu2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -142,7 +140,6 @@ public class Post_Login extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu4.setBorder(null);
         jMenu4.setForeground(java.awt.Color.white);
         jMenu4.setText("Realizar");
         jMenu4.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -163,7 +160,6 @@ public class Post_Login extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
-        jMenu3.setBorder(null);
         jMenu3.setForeground(java.awt.Color.white);
         jMenu3.setText("Exit");
         jMenu3.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
