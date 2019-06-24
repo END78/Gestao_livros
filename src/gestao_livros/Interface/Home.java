@@ -248,44 +248,45 @@ public class Home extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        String user=User.getText();
+        String user = User.getText();
         String pwd= new String (Pass.getPassword());
         
         EncryptPass enc = new EncryptPass ();
         Boolean check = null;
         
-        if((user.isEmpty() && pwd.isEmpty() ))
+        if((user.isEmpty() && pwd.isEmpty() && (!(func.isSelected()) || !(cl.isSelected())||!(admin.isSelected()) ) ))
             {
-                JOptionPane.showMessageDialog(this,"Os campos nao podem estar vazios");
+                JOptionPane.showMessageDialog(this,"Os campos nao podem estar vazios, e tem de selecionar um tipo de utilizador");
                 this.dispose();
                 this.setVisible(true);
             
             }
          else
             {
-            String sql=null;
+                String sql=null;
         
             if(func.isSelected())
                 {
-                    sql = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = FALSE";
+                    sql = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = FALSE AND NOME = '"+user+"'";
                 }
             else if(cl.isSelected())
                 {
-                    sql = "SELECT * FROM REQUERENTE ";
+                    sql = "SELECT * FROM REQUERENTE WHERE NOME = '"+user+"'";
                 }
             else if(admin.isSelected())
                 {
-                     sql = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = TRUE";
+                     sql = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = TRUE AND NOME = '"+user+"'";
                  }
         
         ResultSet rs = null;
        
        
         try {
+           
             Class.forName("com.mysql.jdbc.Driver");
             Connection con= (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/BIBLIOTECA?verifyServerCertificate=false&useSSL=true","root","casadejogos");
             
-            // statement login usuario normal ou funcionario
+           
             Statement stmt=con.createStatement();
             rs = stmt.executeQuery(sql);
             
@@ -293,73 +294,82 @@ public class Home extends javax.swing.JFrame {
             
             
         
-            while(rs.next()) 
-            {
-                String uname=rs.getString("NOME");
-                String password=rs.getString("PASS");
-                check = enc.checkPass(pwd, password);
+                while(rs.next()) 
+                    {
+                
+                        String uname = rs.getString("NOME");
+                        String password=rs.getString("PASS");
+                        check = enc.checkPass(pwd, password);
+                        
+                        if(admin.isSelected() && user.equals(uname)&& check == true )
+                        {
+                             admin_page n = new admin_page();
+                             n.setVisible(true);
+                             n.pack();
+                             n.setLocationRelativeTo(null);
+                             n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                             this.dispose();  
+                        }
+                        else if( func.isSelected() && user.equals(uname) && check == true )
+                        {
+                            System.out.println(check);
+                            Post_Login window = new Post_Login();
+                            window.setVisible(true);
+                            window.pack();
+                            window.setLocationRelativeTo(null);
+                            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            this.dispose();
+                        }
+                        if(user.equals(uname) && check == true && cl.isSelected())
+                        {
+                            new Cl_post().setVisible(true);
+                            new Cl_post().pack();
+                            new Cl_post().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            this.dispose();
+                        }
+                        else if(check ==  false)
+                        {
+                            JOptionPane.showMessageDialog(this, "Palavra passe/Utilizador Errado");
+                            this.dispose();
+                            this.setVisible(true);
+                            this.setLocationRelativeTo(null);
+                        }
+                      
+                    
+                
                 
                
                   
             
                              
                  
-                  if(user.equals(uname)&& check == true && admin.isSelected())
-                    {
-                      admin_page n = new admin_page();
-                      n.setVisible(true);
-                      n.pack();
-                      n.setLocationRelativeTo(null);
-                      n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                      this.dispose();  
-                      break;
-                      
-                    }
-                    
-                  if( func.isSelected() && user.equals(uname) && check==true )
-                    {
-                      
-                      Post_Login window = new Post_Login();
-                      window.setVisible(true);
-                      window.pack();
-                      window.setLocationRelativeTo(null);
-                      window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                      this.dispose();
-                      break;
-                      
-                    }
+                 
+                     
+                
+                  
+                  
+                           
                    
                                 
-                    if(user.equals(uname) && check == true && cl.isSelected())
-                    {
-                      
-                       new Cl_post().setVisible(true);
-                       new Cl_post().pack();
-                       new Cl_post().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                       this.dispose();
-                       break;
-                    }
+                 
                            
+                 
                             
-                    if(user.equals(uname) || !(user.equals(uname)) && check == false)
-                    {
-                        JOptionPane.showMessageDialog(this, "Palavra passe/Utilizador Errado");
-                        this.dispose();
-                        this.setVisible(true);
-                        this.setLocationRelativeTo(null);
-                    }
+                 
                     
                  
             
+                    }
             }
-            }
-        catch (Exception e)
-        {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
+             catch (Exception e)
+             {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+             }
         
         }
     
+        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseClicked

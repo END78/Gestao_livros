@@ -5,6 +5,14 @@
  */
 package gestao_livros.Interface;
 
+import gestao_livros.Livros;
+import gestao_livros.MyConnection;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author danielpires
@@ -28,28 +36,28 @@ public class add_book extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
+        isbn = new javax.swing.JPanel();
+        autor = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        isbn_book = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        ano = new javax.swing.JTextField();
+        name = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(44, 62, 80));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1195, 622));
+        isbn.setBackground(new java.awt.Color(44, 62, 80));
+        isbn.setPreferredSize(new java.awt.Dimension(1195, 622));
 
-        jTextField2.setBackground(new java.awt.Color(108, 122, 137));
-        jTextField2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jTextField2.setBorder(null);
+        autor.setBackground(new java.awt.Color(108, 122, 137));
+        autor.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        autor.setBorder(null);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel1.setForeground(java.awt.Color.white);
@@ -67,9 +75,9 @@ public class add_book extends javax.swing.JFrame {
         jLabel4.setForeground(java.awt.Color.white);
         jLabel4.setText("ISBN");
 
-        jTextField3.setBackground(new java.awt.Color(108, 122, 137));
-        jTextField3.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jTextField3.setBorder(null);
+        isbn_book.setBackground(new java.awt.Color(108, 122, 137));
+        isbn_book.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        isbn_book.setBorder(null);
 
         jButton2.setBackground(new java.awt.Color(34, 167, 240));
         jButton2.setFont(new java.awt.Font("Bitstream Vera Sans", 1, 18)); // NOI18N
@@ -91,13 +99,13 @@ public class add_book extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(248, 148, 6));
         jLabel5.setText("Adicionar Livro");
 
-        jTextField4.setBackground(new java.awt.Color(108, 122, 137));
-        jTextField4.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jTextField4.setBorder(null);
+        ano.setBackground(new java.awt.Color(108, 122, 137));
+        ano.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        ano.setBorder(null);
 
-        jTextField1.setBackground(new java.awt.Color(108, 122, 137));
-        jTextField1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jTextField1.setBorder(null);
+        name.setBackground(new java.awt.Color(108, 122, 137));
+        name.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        name.setBorder(null);
 
         jButton3.setBackground(new java.awt.Color(192, 57, 43));
         jButton3.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -114,62 +122,62 @@ public class add_book extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout isbnLayout = new javax.swing.GroupLayout(isbn);
+        isbn.setLayout(isbnLayout);
+        isbnLayout.setHorizontalGroup(
+            isbnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, isbnLayout.createSequentialGroup()
                 .addGap(86, 86, 86)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(isbnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(isbnLayout.createSequentialGroup()
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(isbnLayout.createSequentialGroup()
+                        .addGroup(isbnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(isbnLayout.createSequentialGroup()
+                                .addGroup(isbnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(isbn_book, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel2)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(ano, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 12, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(isbnLayout.createSequentialGroup()
+                                .addGroup(isbnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(autor, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(jLabel5)))
                 .addGap(117, 117, 117))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        isbnLayout.setVerticalGroup(
+            isbnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(isbnLayout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jLabel2)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(isbnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(isbnLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(autor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(isbnLayout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(jLabel5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(isbn_book, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ano, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(isbnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(66, 66, 66))
@@ -181,14 +189,14 @@ public class add_book extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(isbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(isbn, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -200,7 +208,64 @@ public class add_book extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Livros adicionar = new Livros();
+        adicionar.setNome(name.getText());
+        adicionar.setAutor(autor.getText());
+        adicionar.setISBN(isbn_book.getText());
+        adicionar.setAno_publ(ano.getText());
         
+        if(adicionar.getNome().isEmpty() && adicionar.getAutor().isEmpty() && adicionar.getISBN().isEmpty() && adicionar.getAno_publ().isEmpty())
+        {
+            if(ano.getText().length() != 4 )
+            {
+                JOptionPane.showMessageDialog(this,"Existem Campos Vazios e/ou o ano tem tamanho diferente de 4");
+                this.dispose();
+                this.setVisible(true);
+            }
+        }
+        else
+        {
+             
+             
+             PreparedStatement ps;
+                             String query = "INSERT INTO `LIVRO`(`ID_L`, `ISBN`, `AUTOR`, `ANO_PUBL`, `NOME`, `IS_LOANED`) VALUES (?,?,?,?,?,?)";
+                            
+                                try
+                                   {
+                                   
+                                    String myDriver = "com.mysql.jdbc.Driver";
+                                    String myUrl = "jdbc:mysql://localhost:3306/BIBLIOTECA?verifyServerCertificate=false&useSSL=true";
+                                    Class.forName(myDriver);
+                                    Connection conn = DriverManager.getConnection(myUrl, "root", "casadejogos");
+      
+                                    ps = conn.prepareStatement(query);
+
+   
+                                    ps.setString(1, null);
+                                    ps.setString(2, adicionar.getISBN());
+                                    ps.setString(3, adicionar.getAutor());
+                                    ps.setString(4, adicionar.getAno_publ());
+                                    ps.setString(5, adicionar.getNome());
+                                    ps.setBoolean(6, false);
+                                   
+                                     if(ps.executeUpdate() > 0)
+                                         {
+                                            JOptionPane.showMessageDialog(null, "Novo Livro adicionado com sucesso (Nome: " + adicionar.getNome()+")");
+                                            Post_Login obj = new Post_Login();
+                                           
+                                            obj.setVisible(true);
+                                            obj.pack();
+                                            obj.setLocationRelativeTo(null);
+                                            obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                            this.dispose();
+                                         }
+                                   }
+                                  catch (Exception e)
+                                    {
+                                        JOptionPane.showMessageDialog(this,"Detectada excepcao " + e.getMessage());
+                                        
+                                    }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
@@ -247,6 +312,10 @@ public class add_book extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ano;
+    private javax.swing.JTextField autor;
+    private javax.swing.JPanel isbn;
+    private javax.swing.JTextField isbn_book;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -254,10 +323,6 @@ public class add_book extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField name;
     // End of variables declaration//GEN-END:variables
 }

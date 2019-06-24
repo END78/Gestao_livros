@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -103,7 +104,8 @@ public class Cl_post extends javax.swing.JFrame {
        return usersList;
    }
    public void Show_Users_In_JTable()
-   {
+   {    
+       String s = null;Boolean ss;
        ArrayList<Livros> list = getUsersList();
        DefaultTableModel model = (DefaultTableModel)table.getModel();
        Object[] row = new Object[5];
@@ -112,7 +114,12 @@ public class Cl_post extends javax.swing.JFrame {
            row[0] = list.get(i).getNome();
            row[1] = list.get(i).getAutor();
            row[2] = list.get(i).getISBN();
-           row[3] = list.get(i).isIs_loaned();
+           ss = list.get(i).isIs_loaned();
+           if(ss==true)
+               s = "Disponivel";
+           else
+               s= "Indisponivel";
+           row[3] = s;
            row[4] = list.get(i).getAno_publ();
            
            model.addRow(row);
@@ -120,6 +127,7 @@ public class Cl_post extends javax.swing.JFrame {
     }
    public void Show_Users_In_JTable2()
    {
+        String s = null;Boolean ss;
        ArrayList<Livros> list = getUsersList2();
        DefaultTableModel model = (DefaultTableModel)table.getModel();
        Object[] row = new Object[5];
@@ -128,7 +136,12 @@ public class Cl_post extends javax.swing.JFrame {
            row[0] = list.get(i).getNome();
            row[1] = list.get(i).getAutor();
            row[2] = list.get(i).getISBN();
-           row[3] = list.get(i).isIs_loaned();
+           ss = list.get(i).isIs_loaned();
+           if(ss==true)
+               s = "Disponivel";
+           else
+               s= "Indisponivel";
+           row[3] = s;
            row[4] = list.get(i).getAno_publ();
            
            model.addRow(row);
@@ -217,7 +230,7 @@ public class Cl_post extends javax.swing.JFrame {
         exit.setBackground(new java.awt.Color(34, 167, 240));
         exit.setFont(new java.awt.Font("Bitstream Vera Sans", 1, 18)); // NOI18N
         exit.setForeground(new java.awt.Color(255, 255, 255));
-        exit.setText("Exit");
+        exit.setText("LogOut");
         exit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 exitMouseClicked(evt);
@@ -238,7 +251,7 @@ public class Cl_post extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome do Livro", "Autor", "ISBN", "Disponivel", "Ano Publicacao"
+                "Nome do Livro", "Autor", "ISBN", "Disponibilidade", "Ano Publicacao"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -344,7 +357,11 @@ public class Cl_post extends javax.swing.JFrame {
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         this.dispose();
-        System.exit(1);
+        Home n = new Home();
+        n.setVisible(true);
+        n.pack();
+        n.setLocationRelativeTo(null);
+        n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }//GEN-LAST:event_exitActionPerformed
 
     /**

@@ -44,6 +44,7 @@ public class Post_Login extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         emp = new javax.swing.JMenuItem();
+        log_out = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -160,6 +161,21 @@ public class Post_Login extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        log_out.setForeground(java.awt.Color.white);
+        log_out.setText("LogOut");
+        log_out.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        log_out.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                log_outMouseClicked(evt);
+            }
+        });
+        log_out.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                log_outActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(log_out);
+
         jMenu3.setForeground(java.awt.Color.white);
         jMenu3.setText("Exit");
         jMenu3.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -229,6 +245,24 @@ public class Post_Login extends javax.swing.JFrame {
        new Rm_Cliente().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }//GEN-LAST:event_rm_clActionPerformed
 
+    private void log_outMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_log_outMouseClicked
+        this.dispose();
+        Home n = new Home();
+        n.setVisible(true);
+        n.pack();
+        n.setLocationRelativeTo(null);
+        n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_log_outMouseClicked
+
+    private void log_outActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_log_outActionPerformed
+        this.dispose();
+        Home n = new Home();
+        n.setVisible(true);
+        n.pack();
+        n.setLocationRelativeTo(null);
+        n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_log_outActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -275,6 +309,7 @@ public class Post_Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JMenu log_out;
     private javax.swing.JPanel painel;
     private javax.swing.JMenuItem rm_cl;
     private javax.swing.JMenuItem rmbook;
