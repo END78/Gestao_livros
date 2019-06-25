@@ -5,6 +5,17 @@
  */
 package gestao_livros.Interface;
 
+import gestao_livros.Livros;
+import gestao_livros.Requerente;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author danielpires
@@ -17,7 +28,83 @@ public class Rm_Cliente extends javax.swing.JFrame {
     public Rm_Cliente() {
         initComponents();
         this.setLocationRelativeTo(null);
+        Show_Users_In_JTable();
     }
+      public Connection getConnection()
+   {
+       Connection con = null;
+       try {
+           Class.forName("com.mysql.jdbc.Driver");
+           con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIBLIOTECA?verifyServerCertificate=false&useSSL=true","root","casadejogos");
+           return con;
+       } catch (Exception e) {
+           e.printStackTrace();
+           return null;
+       }
+   }
+   public ArrayList<Requerente> getUsersList()
+   {
+       ArrayList<Requerente> usersList = new ArrayList<Requerente>();
+       Connection connection = getConnection();
+       
+       String query = "SELECT * FROM  `REQUERENTE`";
+       Statement st;
+       ResultSet rs;
+       
+       try {
+           st = connection.createStatement();
+           rs = st.executeQuery(query);
+           
+           while(rs.next())
+           {
+               Requerente user = new Requerente();
+               user.setNome (rs.getString("NOME"));
+               user.setEmail(rs.getString("EMAIL"));
+               user.setID(rs.getInt("ID_R"));
+             
+               usersList.add(user);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return usersList;
+   }
+   public void Show_Users_In_JTable()
+   {
+       ArrayList<Requerente> list = getUsersList();
+       DefaultTableModel model = (DefaultTableModel)table.getModel();
+       Object[] row = new Object[3];
+       for(int i = 0; i < list.size(); i++)
+       {
+           row[0] = list.get(i).getNome();
+           row[1] = list.get(i).getEmail();
+           row[2] = list.get(i).getID();
+           
+           
+           model.addRow(row);
+       }
+    }
+   public void executeSQlQuery(String query, String message)
+   {
+       Connection con = getConnection();
+       Statement st;
+       try{
+           st = con.createStatement();
+           if((st.executeUpdate(query)) == 1)
+           {
+               // refresh jtable data
+               DefaultTableModel model = (DefaultTableModel)table.getModel();
+               model.setRowCount(0);
+               Show_Users_In_JTable();
+               
+               JOptionPane.showMessageDialog(null, "Data "+message+" Succefully");
+           }else{
+               JOptionPane.showMessageDialog(null, "Data Not "+message);
+           }
+       }catch(Exception ex){
+           ex.printStackTrace();
+       }
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,14 +129,18 @@ public class Rm_Cliente extends javax.swing.JFrame {
         isbn1 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        isbn2 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        nome_book2 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
+        nome = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        id = new javax.swing.JTextField();
 
         nome_book.setBackground(new java.awt.Color(108, 122, 137));
         nome_book.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -156,118 +247,178 @@ public class Rm_Cliente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(44, 62, 80));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1195, 622));
+        jPanel2.setBackground(new java.awt.Color(44, 62, 80));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1195, 622));
 
-        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jLabel3.setForeground(java.awt.Color.white);
-        jLabel3.setText("Nome");
+        jLabel10.setBackground(new java.awt.Color(248, 148, 6));
+        jLabel10.setFont(new java.awt.Font("Ubuntu", 1, 48)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(248, 148, 6));
+        jLabel10.setText("Remover Livros");
 
-        jLabel8.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jLabel8.setForeground(java.awt.Color.white);
-        jLabel8.setText("Email");
+        table.setBackground(new java.awt.Color(44, 62, 80));
+        table.setBorder(null);
+        table.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        table.setForeground(new java.awt.Color(248, 148, 6));
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        isbn2.setBackground(new java.awt.Color(108, 122, 137));
-        isbn2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        isbn2.setBorder(null);
+            },
+            new String [] {
+                "Nome", "Email", "ID"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, false
+            };
 
-        jButton5.setBackground(new java.awt.Color(34, 167, 240));
-        jButton5.setFont(new java.awt.Font("Bitstream Vera Sans", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Remover");
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton5MouseClicked(evt);
+                tableMouseClicked(evt);
             }
         });
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jScrollPane1.setViewportView(table);
+
+        nome.setEditable(false);
+        nome.setBackground(new java.awt.Color(108, 122, 137));
+        nome.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        nome.setBorder(null);
+        nome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                nomeActionPerformed(evt);
             }
         });
 
-        jLabel9.setBackground(new java.awt.Color(248, 148, 6));
-        jLabel9.setFont(new java.awt.Font("Ubuntu", 1, 48)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(248, 148, 6));
-        jLabel9.setText("Remover Cliente");
+        email.setEditable(false);
+        email.setBackground(new java.awt.Color(108, 122, 137));
+        email.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        email.setBorder(null);
+        email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailActionPerformed(evt);
+            }
+        });
 
-        nome_book2.setBackground(new java.awt.Color(108, 122, 137));
-        nome_book2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        nome_book2.setBorder(null);
+        jLabel11.setFont(new java.awt.Font("Bitstream Vera Sans", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(236, 240, 241));
+        jLabel11.setText("Nome");
 
-        jButton6.setBackground(new java.awt.Color(192, 57, 43));
-        jButton6.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Cancel");
-        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel12.setFont(new java.awt.Font("Bitstream Vera Sans", 1, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(236, 240, 241));
+        jLabel12.setText("Email");
+
+        jButton7.setBackground(new java.awt.Color(248, 148, 6));
+        jButton7.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("Remover");
+        jButton7.setBorder(null);
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton6MouseClicked(evt);
+                jButton7MouseClicked(evt);
             }
         });
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                jButton7ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(86, 86, 86)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(isbn2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(nome_book2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addGap(60, 132, Short.MAX_VALUE)
-                        .addComponent(jLabel9)))
-                .addGap(117, 117, 117))
+        jButton8.setBackground(new java.awt.Color(192, 57, 43));
+        jButton8.setFont(new java.awt.Font("Bitstream Vera Sans", 1, 18)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setText("Back");
+        jButton8.setBorder(null);
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton8MouseClicked(evt);
+            }
+        });
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Bitstream Vera Sans", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(236, 240, 241));
+        jLabel13.setText("ID");
+
+        id.setEditable(false);
+        id.setBackground(new java.awt.Color(108, 122, 137));
+        id.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        id.setBorder(null);
+        id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(40, 40, 40)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(nome)
+                                .addComponent(email)
+                                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(245, 245, 245)
-                        .addComponent(jLabel9)
-                        .addGap(26, 26, 26))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(74, 74, 74)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(76, 76, 76)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(nome_book2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(isbn2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(66, 66, 66))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1219, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
         );
 
         pack();
@@ -305,21 +456,51 @@ public class Rm_Cliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
 
-    }//GEN-LAST:event_jButton5MouseClicked
+        // Get The Index Of The Slected Row
+        int i = table.getSelectedRow();
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        TableModel model =table.getModel();
+
+        // Display Slected Row In JTexteFields
+        nome.setText(model.getValueAt(i,0).toString());
+
+        email.setText(model.getValueAt(i,1).toString());
+
+        id.setText(model.getValueAt(i, 2).toString());
+    }//GEN-LAST:event_tableMouseClicked
+
+    private void nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_nomeActionPerformed
 
-    private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
-        this.dispose();
-    }//GEN-LAST:event_jButton6MouseClicked
+    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
+
+    }//GEN-LAST:event_jButton7MouseClicked
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+
+        String query = "DELETE FROM `REQUERENTE` WHERE NOME = '"+nome.getText()+"' AND ID_R = '"+id.getText()+"'";
+        executeSQlQuery(query, "Deleted");
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
+
         this.dispose();
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_jButton8MouseClicked
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idActionPerformed
 
     /**
      * @param args the command line arguments
@@ -357,27 +538,31 @@ public class Rm_Cliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField email;
+    private javax.swing.JTextField id;
     private javax.swing.JTextField isbn;
     private javax.swing.JTextField isbn1;
-    private javax.swing.JTextField isbn2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField nome;
     private javax.swing.JTextField nome_book;
     private javax.swing.JTextField nome_book1;
-    private javax.swing.JTextField nome_book2;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

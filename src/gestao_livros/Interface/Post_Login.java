@@ -219,7 +219,7 @@ public class Post_Login extends javax.swing.JFrame {
        new add_book().pack();
        new add_book().setLocationRelativeTo(null);
        new add_book().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       
+   
        
        
     }//GEN-LAST:event_add_bookActionPerformed
