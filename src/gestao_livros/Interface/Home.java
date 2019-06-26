@@ -254,7 +254,7 @@ public class Home extends javax.swing.JFrame {
         EncryptPass enc = new EncryptPass ();
         Boolean check = null;
         
-        if((user.isEmpty() && pwd.isEmpty() && (!(func.isSelected()) || !(cl.isSelected())||!(admin.isSelected()) ) ))
+        if((user.isEmpty() && pwd.isEmpty() && ((func.isSelected() == false) || !(cl.isSelected()== false)||!(admin.isSelected()== false) ) ))
             {
                 JOptionPane.showMessageDialog(this,"Os campos nao podem estar vazios, e tem de selecionar um tipo de utilizador");
                 this.dispose();
@@ -267,7 +267,7 @@ public class Home extends javax.swing.JFrame {
         
             if(func.isSelected())
                 {
-                    sql = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = FALSE AND NOME = '"+user+"'";
+                    sql = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = FALSE AND  NOME = '"+user+"'";
                 }
             else if(cl.isSelected())
                 {
@@ -275,8 +275,8 @@ public class Home extends javax.swing.JFrame {
                 }
             else if(admin.isSelected())
                 {
-                     sql = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = TRUE AND NOME = '"+user+"'";
-                 }
+                     sql = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = TRUE AND  NOME = '"+user+"'";
+                }
         
         ResultSet rs = null;
        
@@ -290,77 +290,66 @@ public class Home extends javax.swing.JFrame {
             Statement stmt=con.createStatement();
             rs = stmt.executeQuery(sql);
             
+          
             
-            
-            
-        
-                while(rs.next()) 
-                    {
+            if(rs.next() == true)
+            {
+               
                 
                         String uname = rs.getString("NOME");
                         String password=rs.getString("PASS");
                         check = enc.checkPass(pwd, password);
                         
-                        if(admin.isSelected() && user.equals(uname)&& check == true )
-                        {
-                             admin_page n = new admin_page();
-                             n.setVisible(true);
-                             n.pack();
-                             n.setLocationRelativeTo(null);
-                             n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                             this.dispose();  
-                        }
-                        else if( func.isSelected() && user.equals(uname) && check == true )
-                        {
-                            System.out.println(check);
-                            Post_Login window = new Post_Login();
-                            window.setVisible(true);
-                            window.pack();
-                            window.setLocationRelativeTo(null);
-                            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                            this.dispose();
-                        }
-                        if(user.equals(uname) && check == true && cl.isSelected())
-                        {
-                            new Cl_post().setVisible(true);
-                            new Cl_post().pack();
-                            new Cl_post().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                            this.dispose();
-                        }
-                        else if(check ==  false)
-                        {
-                            JOptionPane.showMessageDialog(this, "Palavra passe/Utilizador Errado");
-                            this.dispose();
-                            this.setVisible(true);
-                            this.setLocationRelativeTo(null);
-                        }
-                      
-                    
-                
-                
-               
-                  
-            
-                             
-                 
-                 
-                     
-                
-                  
-                  
-                           
-                   
-                                
-                 
-                           
-                 
+                        
+                        
                             
-                 
+                            
+                        
+                            if(admin.isSelected() && user.equals(uname) == true && check == true )
+                            {
+                                admin_page n = new admin_page();
+                                n.setVisible(true);
+                                n.pack();
+                                n.setLocationRelativeTo(null);
+                                n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                this.dispose();  
+                            }
+                            else if( func.isSelected() && user.equals(uname) == true && check == true )
+                            {
+                            
+                                Post_Login window = new Post_Login();
+                                window.setVisible(true);
+                                window.pack();
+                                window.setLocationRelativeTo(null);
+                                window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                this.dispose();
+                            }
+                            else if(user.equals(uname) == true  && check == true && cl.isSelected())
+                            {
+                                new Cl_post().setVisible(true);
+                                new Cl_post().pack();
+                                new Cl_post().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                this.dispose();
+                            }
+                            else if(check == false ) 
+                            {
+                                JOptionPane.showMessageDialog(this, "Palavra passe Errada");
+                                this.dispose();
+                                
+                                new Home().setVisible(true);
+                                
+                            
+                            }
+             
                     
-                 
-            
-                    }
             }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Utilizador Nao Existe");
+                this.dispose();
+                new Home().setVisible(true);
+            }
+        }
              catch (Exception e)
              {
                 JOptionPane.showMessageDialog(this, e.getMessage());

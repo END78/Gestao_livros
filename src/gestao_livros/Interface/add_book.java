@@ -216,15 +216,17 @@ public class add_book extends javax.swing.JFrame {
         
         if(adicionar.getNome().isEmpty() && adicionar.getAutor().isEmpty() && adicionar.getISBN().isEmpty() && adicionar.getAno_publ().isEmpty())
         {
-            if(ano.getText().length() != 4 )
+            
+        }
+        else
+        {
+            if(ano.getText().length() < 4 || ano.getText().length()>4 )
             {
                 JOptionPane.showMessageDialog(this,"Existem Campos Vazios e/ou o ano tem tamanho diferente de 4");
                 this.dispose();
                 this.setVisible(true);
             }
-        }
-        else
-        {
+            else{
              
              
              PreparedStatement ps;
@@ -265,6 +267,7 @@ public class add_book extends javax.swing.JFrame {
                                         JOptionPane.showMessageDialog(this,"Detectada excepcao " + e.getMessage());
                                         
                                     }
+        }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
