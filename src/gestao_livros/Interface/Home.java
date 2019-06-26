@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import gestao_livros.EncryptPass;
+import java.awt.HeadlessException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -350,7 +351,7 @@ public class Home extends javax.swing.JFrame {
                 new Home().setVisible(true);
             }
         }
-             catch (Exception e)
+             catch (HeadlessException | ClassNotFoundException | SQLException e)
              {
                 JOptionPane.showMessageDialog(this, e.getMessage());
              }
