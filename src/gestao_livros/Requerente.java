@@ -15,7 +15,7 @@ public class Requerente
     private String email;
     private char pass[];
     private int ID;
-
+  
     public int getID() {
         return ID;
     }

@@ -368,7 +368,7 @@ public class Reg_Func extends javax.swing.JFrame {
                     if(connect.checkUsername(usr.getEmail()) == false)
                     {
                         PreparedStatement ps;
-                        String query = "INSERT INTO `FUNCIONARIO`(`ID_F`, `NOME`,`IS_ADMIN`, `EMAIL`, `PASS`) VALUES (?,?,?,?,?)";
+                        String query = "INSERT INTO `FUNCIONARIO`(`ID_F`, `NOME`,`IS_ADMIN`, `EMAIL`, `PASS`,`IS_ACTIVE`) VALUES (?,?,?,?,?,?)";
 
                         try
                         {
@@ -385,6 +385,7 @@ public class Reg_Func extends javax.swing.JFrame {
                             ps.setBoolean(3, false);
                             ps.setString(4, usr.getEmail());
                             ps.setString(5, generatedPassword);
+                            ps.setBoolean(6, true);
 
                             if(ps.executeUpdate() > 0)
                             {

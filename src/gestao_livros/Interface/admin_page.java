@@ -115,14 +115,14 @@ public class admin_page extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setForeground(java.awt.Color.white);
-        jMenu2.setText("Remover");
+        jMenu2.setText("Desativar");
         jMenu2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jMenu2.setMargin(new java.awt.Insets(0, 0, 0, 2));
 
         rm_func.setBackground(new java.awt.Color(87, 79, 74));
         rm_func.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         rm_func.setForeground(new java.awt.Color(248, 148, 6));
-        rm_func.setText("Remover Funcionario");
+        rm_func.setText("Funcionario");
         rm_func.setBorder(null);
         rm_func.setContentAreaFilled(false);
         rm_func.setIconTextGap(0);

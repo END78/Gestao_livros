@@ -40,7 +40,6 @@ public class Post_Login extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenu2 = new javax.swing.JMenu();
         rmbook = new javax.swing.JMenuItem();
-        rm_cl = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         emp = new javax.swing.JMenuItem();
@@ -125,19 +124,6 @@ public class Post_Login extends javax.swing.JFrame {
             }
         });
         jMenu2.add(rmbook);
-
-        rm_cl.setBackground(new java.awt.Color(87, 79, 74));
-        rm_cl.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        rm_cl.setForeground(new java.awt.Color(248, 148, 6));
-        rm_cl.setText("Remover Cliente");
-        rm_cl.setBorder(null);
-        rm_cl.setIconTextGap(0);
-        rm_cl.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rm_clActionPerformed(evt);
-            }
-        });
-        jMenu2.add(rm_cl);
 
         jMenuBar1.add(jMenu2);
 
@@ -238,13 +224,6 @@ public class Post_Login extends javax.swing.JFrame {
        new Loan_Book().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }//GEN-LAST:event_empActionPerformed
 
-    private void rm_clActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rm_clActionPerformed
-       new Rm_Cliente().setVisible(true);
-       new Rm_Cliente().pack();
-       new Rm_Cliente().setLocationRelativeTo(null);
-       new Rm_Cliente().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }//GEN-LAST:event_rm_clActionPerformed
-
     private void log_outMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_log_outMouseClicked
         this.dispose();
         Home n = new Home();
@@ -311,7 +290,6 @@ public class Post_Login extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JMenu log_out;
     private javax.swing.JPanel painel;
-    private javax.swing.JMenuItem rm_cl;
     private javax.swing.JMenuItem rmbook;
     // End of variables declaration//GEN-END:variables
 }

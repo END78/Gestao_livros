@@ -61,6 +61,7 @@ public class Rm_Cliente extends javax.swing.JFrame {
                user.setNome (rs.getString("NOME"));
                user.setEmail(rs.getString("EMAIL"));
                user.setID(rs.getInt("ID_R"));
+               
              
                usersList.add(user);
            }

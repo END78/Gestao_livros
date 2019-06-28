@@ -216,13 +216,15 @@ public class add_book extends javax.swing.JFrame {
         
         if(adicionar.getNome().isEmpty() && adicionar.getAutor().isEmpty() && adicionar.getISBN().isEmpty() && adicionar.getAno_publ().isEmpty())
         {
-            
+            JOptionPane.showMessageDialog(this,"Nao podem existir campos vazios");
+            this.dispose();
+            this.setVisible(true); 
         }
         else
         {
             if(ano.getText().length() < 4 || ano.getText().length()>4 )
             {
-                JOptionPane.showMessageDialog(this,"Existem Campos Vazios e/ou o ano tem tamanho diferente de 4");
+                JOptionPane.showMessageDialog(this,"Ano tem tamanho diferente de 4");
                 this.dispose();
                 this.setVisible(true);
             }

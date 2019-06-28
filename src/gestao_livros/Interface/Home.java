@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import gestao_livros.EncryptPass;
+import java.awt.HeadlessException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -299,7 +300,7 @@ public class Home extends javax.swing.JFrame {
                         String uname = rs.getString("NOME");
                         String password=rs.getString("PASS");
                         check = enc.checkPass(pwd, password);
-                        
+                        boolean estado = rs.getBoolean("IS_ACTIVE");
                         
                         
                             
@@ -316,13 +317,23 @@ public class Home extends javax.swing.JFrame {
                             }
                             else if( func.isSelected() && user.equals(uname) == true && check == true )
                             {
-                            
-                                Post_Login window = new Post_Login();
-                                window.setVisible(true);
-                                window.pack();
-                                window.setLocationRelativeTo(null);
-                                window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                if(estado == true)
+                                {
+                                    Post_Login window = new Post_Login();
+                                    window.setVisible(true);
+                                    window.pack();
+                                    window.setLocationRelativeTo(null);
+                                    window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                    this.dispose();
+                                }
+                                else
+                                {
+                                JOptionPane.showMessageDialog(this, "Utilizador Inativo");
                                 this.dispose();
+                                
+                                new Home().setVisible(true);
+                                }
+                                
                             }
                             else if(user.equals(uname) == true  && check == true && cl.isSelected())
                             {
@@ -350,7 +361,7 @@ public class Home extends javax.swing.JFrame {
                 new Home().setVisible(true);
             }
         }
-             catch (Exception e)
+             catch (HeadlessException | ClassNotFoundException | SQLException e)
              {
                 JOptionPane.showMessageDialog(this, e.getMessage());
              }
