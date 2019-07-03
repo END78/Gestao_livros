@@ -116,9 +116,9 @@ public class Cl_post extends javax.swing.JFrame {
            row[2] = list.get(i).getISBN();
            ss = list.get(i).isIs_loaned();
            if(ss==true)
-               s = "Disponivel";
+               s = "Indisponivel";
            else
-               s= "Indisponivel";
+               s= "Disponivel";
            row[3] = s;
            row[4] = list.get(i).getAno_publ();
            
@@ -138,9 +138,9 @@ public class Cl_post extends javax.swing.JFrame {
            row[2] = list.get(i).getISBN();
            ss = list.get(i).isIs_loaned();
            if(ss==true)
-               s = "Disponivel";
+               s = "Indisponivel";
            else
-               s= "Indisponivel";
+               s= "Disponivel";
            row[3] = s;
            row[4] = list.get(i).getAno_publ();
            

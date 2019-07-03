@@ -324,7 +324,7 @@ public class Reg_Func extends javax.swing.JFrame {
     }//GEN-LAST:event_UserActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        Home call = new Home();
+        admin_page call = new admin_page();
         call.setVisible(true);
         call.pack();
         call.setLocationRelativeTo(null);

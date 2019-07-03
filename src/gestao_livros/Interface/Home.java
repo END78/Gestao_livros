@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author fune5ti
  */
 public class Home extends javax.swing.JFrame {
-
+public static String usrnm;
    
     public Home() {
         initComponents();
@@ -250,6 +250,7 @@ public class Home extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         String user = User.getText();
+        usrnm = User.getText();
         String pwd= new String (Pass.getPassword());
         
         EncryptPass enc = new EncryptPass ();
@@ -268,7 +269,7 @@ public class Home extends javax.swing.JFrame {
         
             if(func.isSelected())
                 {
-                    sql = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = FALSE AND  NOME = '"+user+"'";
+                    sql = "SELECT * FROM FUNCIONARIO WHERE IS_ADMIN = FALSE AND  NOME = '"+user+"' AND IS_ACTIVE = TRUE";
                 }
             else if(cl.isSelected())
                 {
@@ -300,7 +301,8 @@ public class Home extends javax.swing.JFrame {
                         String uname = rs.getString("NOME");
                         String password=rs.getString("PASS");
                         check = enc.checkPass(pwd, password);
-                        boolean estado = rs.getBoolean("IS_ACTIVE");
+                        
+                       // boolean estado = rs.getBoolean("IS_ACTIVE");
                         
                         
                             
@@ -317,22 +319,16 @@ public class Home extends javax.swing.JFrame {
                             }
                             else if( func.isSelected() && user.equals(uname) == true && check == true )
                             {
-                                if(estado == true)
-                                {
+                               
+                              
                                     Post_Login window = new Post_Login();
                                     window.setVisible(true);
                                     window.pack();
                                     window.setLocationRelativeTo(null);
                                     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                                     this.dispose();
-                                }
-                                else
-                                {
-                                JOptionPane.showMessageDialog(this, "Utilizador Inativo");
-                                this.dispose();
+                               
                                 
-                                new Home().setVisible(true);
-                                }
                                 
                             }
                             else if(user.equals(uname) == true  && check == true && cl.isSelected())

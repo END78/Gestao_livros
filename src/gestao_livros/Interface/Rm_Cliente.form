@@ -323,7 +323,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="6" green="94" red="f8" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Remover Livros"/>
+            <Property name="text" type="java.lang.String" value="Remover Clientes"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">

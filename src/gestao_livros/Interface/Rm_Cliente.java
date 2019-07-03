@@ -254,7 +254,7 @@ public class Rm_Cliente extends javax.swing.JFrame {
         jLabel10.setBackground(new java.awt.Color(248, 148, 6));
         jLabel10.setFont(new java.awt.Font("Ubuntu", 1, 48)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(248, 148, 6));
-        jLabel10.setText("Remover Livros");
+        jLabel10.setText("Remover Clientes");
 
         table.setBackground(new java.awt.Color(44, 62, 80));
         table.setBorder(null);
